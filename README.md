@@ -3,7 +3,7 @@ A pack that sets the goal to be as transparent, automatic and stable as possible
 
 
 Introduction:
-This is the public release version of the Mephres Windows Optimization Pack.
+This is the public repository of the Mephres Windows Optimization Pack.
 This pack has been primarily tested on Windows 10 only, but the majority of optimizations should also be compatible with Windows 7 and 11.
 The pack has been tested by several people to assure this pack's reliability and make its content run successfully with each run.
 The goal of this pack is to make Windows require less resources, be lighter in storage and give you more control over your privacy and system.
