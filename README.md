@@ -1,5 +1,5 @@
 # Windows Optimization Pack
-## A pack that sets the goal to be as transparent, automatic and stable as possible while improving fatal flaws inside Windows 7 and upwards.
+## A pack that sets the goal to be as transparent, automatic and stable as possible while improving fatal flaws inside Windows 7 and upwards, utilizing multiple free tools that improve, fix and stabilize the general Windows experience.
 
 
 ## Introduction:
