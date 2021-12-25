@@ -46,10 +46,6 @@ Device Cleanup Command Prompt Edition Created and Published by Uwe Sieber.
 - https://www.uwe-sieber.de/english.html
 - https://www.uwe-sieber.de/misc_tools_e.html#devicecleanup
 
-Empty Standby List Created And Published By Wen Jia Liu.
-- https://wj32.org/wp
-- https://wj32.org/wp/software/empty-standby-list
-
 MSI Afterburner Created and Published by MSI.
 - https://www.guru3d.com/files/index.html
 - https://www.guru3d.com/files-details/msi-afterburner-beta-download.html
