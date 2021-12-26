@@ -91,6 +91,3 @@ For the most optimal functionality, safety and stability, you should always run 
 At last: you can work on this pack for your own purposes and publish it for free under the guidelines of keeping the original README intact and updating it regularly.
 I hope this pack will help you/has helped you. Have a good day and wish you the best.
 - Mephres
-
-
-## END OF README
