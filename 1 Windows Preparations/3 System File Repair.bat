@@ -3,7 +3,7 @@ CLS
 GOTO :CHECKPERMS
 
 :CHECKPERMS
-    echo Administrative Permissions Required. Detecting Permissions...
+    echo Administrative Permissions Required. Requesting Permissions...
 
     NET SESSION >nul 2>&1
     IF %errorLevel% == 0 (
@@ -47,6 +47,7 @@ MpCmdRun -Scan -ScanType -BootSectorScan >NUL 2>&1
 echo. 
 echo Repairing Potential Errors...
 cd /d C:\Windows\system32
+chkdsk
 sfc /scannow
 timeout /t 3 /nobreak
 DISM /Online /Cleanup-Image /CheckHealth
@@ -57,7 +58,6 @@ DISM /Online /Cleanup-Image /RestoreHealth
 timeout /t 3 /nobreak
 sfc /scannow
 timeout /t 3 /nobreak
-chkdsk
 chkdsk /r
 shutdown /r /t 5
 GOTO :FINISH

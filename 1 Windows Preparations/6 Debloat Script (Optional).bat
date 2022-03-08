@@ -3,7 +3,7 @@ CLS
 GOTO :CHECKPERMS
 
 :CHECKPERMS
-    echo Administrative Permissions Required. Detecting Permissions...
+    echo Administrative Permissions Required. Requesting Permissions...
 
     NET SESSION >nul 2>&1
     IF %errorLevel% == 0 (
@@ -37,17 +37,24 @@ IF ERRORLEVEL 1 GOTO :DEBLOATEXIT
 
 :DEBLOATRUN
 echo Running Debloat Script...
-powershell -command iwr -useb "https://git.io/debloat|iex"
+echo Note: "Essential Tweaks" is the only necessary option to choose from.
+echo Other options can be undesirable for a good amount of Windows users.
+timeout /t 2
+powershell iwr -useb "https://git.io/JJ8R4|iex"
 GOTO :NEXT
 
 :DEBLOATEXIT
 echo Running Debloat Script...
-powershell -command iwr -useb "https://git.io/debloat|iex"
-GOTO :EXIT
+echo Note: "Essential Tweaks" is the only necessary option to choose from.
+echo Other options can be undesirable for a good amount of Windows users.
+timeout /t 2
+powershell iwr -useb "https://git.io/JJ8R4|iex"
+GOTO :END
 
 :NEXT
 echo Opening Next Script: Tron Script Downloader...
 call "%~dp0/7 Install Tron Script (Optional).bat"
+taskkill /f /im cmd.exe
 
 :END
 echo The script has been finished. Terminating console in 3 seconds...

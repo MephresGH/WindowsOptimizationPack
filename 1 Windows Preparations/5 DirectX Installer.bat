@@ -26,12 +26,12 @@ IF ERRORLEVEL 2 GOTO :INSTALLRUN
 IF ERRORLEVEL 1 GOTO :INSTALLEXIT
 
 :INSTALLRUN
-start "Start DirectX Installer" "%~dp0/Files/DirectX Installer/dxwebsetup.exe"
+start "Start DirectX Installer" "%~dp0/Files/DirectX/dxwebsetup.exe"
 timeout /t -1
 GOTO :NEXT
 
 :INSTALLEXIT
-start "Start DirectX Installer" "%~dp0/Files/DirectX Installer/dxwebsetup.exe"
+start "Start DirectX Installer" "%~dp0/Files/DirectX/dxwebsetup.exe"
 timeout /t -1
 GOTO :FINISH
 

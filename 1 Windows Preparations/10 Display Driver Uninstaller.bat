@@ -15,10 +15,12 @@ echo ===========================================================================
 echo                               DISPLAY DRIVER UNINSTALLER
 echo ======================================================================================
 echo.
-powershell -command write-host -back Red ------------------------------!!!!!!!! WARNING !!!!!!!!-------------------------------
 timeout /t 1 >NUL 2>&1
+powershell write-host -back Red ------------------------------!!!!!!!! WARNING !!!!!!!!-------------------------------
 echo.
+timeout /t 1 >NUL 2>&1
 powershell -command write-host -fore Red The computer is currently not booted into Safe Mode. It is highly advised to boot into Safe Mode to continue.
+timeout /t 1 >NUL 2>&1
 echo.
 echo The following options can be chosen:
 echo.
@@ -49,8 +51,10 @@ CLS
 echo ======================================================================================
 echo                               DISPLAY DRIVER UNINSTALLER
 echo ======================================================================================
+timeout /t 1 >NUL 2>&1
 echo.
-echo The computer is currently booted in Safe Mode. It is safe to run this program now.
+powershell write-host -fore Green The computer is currently booted in Safe Mode. It is safe to run this program now.
+timeout /t 1 >NUL 2>&1
 echo.
 echo The following options can be chosen:
 echo.
@@ -75,8 +79,6 @@ timeout /t 3
 taskkill /f /im cmd.exe
 
 :INSTRUCTIONS
-echo Opening Image Guide, Close After Inspection...
-"%~dp0/Files/DDU/Display Driver Uninstaller Settings.png"
 echo Opening ReadMe, Close After Inspection...
 "%~dp0/Files/DDU/ReadMe.txt"
 echo Starting Display Driver Uninstaller...

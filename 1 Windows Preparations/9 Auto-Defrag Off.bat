@@ -3,7 +3,7 @@ CLS
 GOTO :CHECKPERMS
 
 :CHECKPERMS
-    echo Administrative Permissions Required. Detecting Permissions...
+    echo Administrative Permissions Required. Requesting Permissions...
 
     NET SESSION >nul 2>&1
     IF %errorLevel% == 0 (
@@ -52,7 +52,7 @@ dfrgui.exe
 GOTO :FINISH
 
 :NEXT
-echo Opening Next Script: Microsoft Edge Uninstaller...
+echo Opening Next Script: Displaz Driver Uninstaller...
 call "%~dp0/10 Display Driver Uninstaller.bat"
 
 :FINISH
