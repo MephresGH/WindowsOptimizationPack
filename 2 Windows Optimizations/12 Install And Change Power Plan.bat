@@ -11,17 +11,17 @@ echo.
 echo The following options can be chosen:
 echo.
 echo ----------------------------------
-echo      [1] Install And Exit
+echo      [1] Install And Continue
 echo.
-echo      [2] Install And Continue
+echo      [2] Install And Exit
 echo.
 echo      [3] Abort
 echo ----------------------------------
 echo.
 CHOICE /C 123 /N /M "Enter Your Choice:"
 IF ERRORLEVEL 3 GOTO :ABORT
-IF ERRORLEVEL 2 GOTO :POWERPLANRUN
-IF ERRORLEVEL 1 GOTO :POWERPLANEXIT
+IF ERRORLEVEL 2 GOTO :POWERPLANEXIT
+IF ERRORLEVEL 1 GOTO :POWERPLANRUN
 
 :POWERPLANRUN
 echo Installing Bitsum Highest Performance Power Plan...
@@ -44,6 +44,7 @@ GOTO :FINISH
 :NEXT
 echo Opening Next Script: Edge Junk Files Removal...
 call "%~dp0/13 Remove Junk Files.bat"
+taskkill /f /im cmd.exe
 
 :FINISH
 echo The installation process has been finished. Terminating console in 3 seconds...

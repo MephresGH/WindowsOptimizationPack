@@ -3,7 +3,7 @@ CLS
 GOTO :CHECKPERMS
 
 :CHECKPERMS
-    echo Administrative Permissions Required. Detecting Permissions...
+    echo Administrative Permissions Required. Requesting Permissions...
 
     NET SESSION >nul 2>&1
     IF %errorLevel% == 0 (
@@ -36,7 +36,7 @@ IF ERRORLEVEL 1 GOTO :SETUP
 
 :SETUP
 echo Preparing HPET...
-cd /d "%~dp0\Files\TimerResolution & Standby Cleaner Lite"
+cd /d "%~dp0\Files\Timer Resolution & Empty Standby List"
 SetTimerResolutionService -uninstall >NUL 2>&1
 SCHTASKS /END /TN "STR" >NUL 2>&1
 SCHTASKS /DELETE /TN "STR" /F >NUL 2>&1
@@ -60,6 +60,7 @@ taskkill /f /im "Intelligent standby list cleaner ISLC.exe" >NUL 2>&1
 taskkill /f /im SetTimerResolutionService.exe >NUL 2>&1
 taskkill /f /im EmptyStandbyList.exe >NUL 2>&1
 taskkill /f /im "Minimal Standby List Cleaner" >NUL 2>&1
+taskkill /f /im "Minimal Timer.exe" >NUL 2>&1
 taskkill /f /im TimerResolution.exe >NUL 2>&1
 bcdedit /set useplatformclock yes
 bcdedit /set useplatformtick yes
@@ -72,16 +73,16 @@ GOTO :HPET
 echo Fixing HPET Permanently...
 lodctr /r
 lodctr /r | more
-SCHTASKS /CREATE /TN "Standby Cleaner Lite" /TR "%~dp0Files\TimerResolution & Standby Cleaner Lite\Standby Cleaner Lite.exe" /SC MINUTE /MO 5 /RU SYSTEM /RL HIGHEST >NUL 2>&1
-SCHTASKS /QUERY /TN "Standby Cleaner Lite" /XML > "%~dp0Files\TimerResolution & Standby Cleaner Lite\StandbyCleanerLite.xml"
-cd /d "%~dp0Files\TimerResolution & Standby Cleaner Lite"
-powershell -Command "(gc 'StandbyCleanerLite.xml' -raw) -replace '<Settings>', '<Settings> <Hidden>true</Hidden>' | Set-Content 'StandbyCleanerLite.xml'"
-SCHTASKS /END /TN "Standby Cleaner Lite" >NUL 2>&1
-SCHTASKS /DELETE /TN "Standby Cleaner Lite" /F >NUL 2>&1
-SCHTASKS /CREATE /XML "StandbyCleanerLite.xml" /TN "Standby Cleaner Lite"
-SCHTASKS /RUN /TN "Standby Cleaner Lite"
-DEL "StandbyCleanerLite.xml" /F >NUL 2>&1
-start "Start TimerResolution" "TimerResolution.exe"
+SCHTASKS /CREATE /TN "Empty Standby List" /TR "%~dp0Files\Timer Resolution & Empty Standby List\EmptyStandbyList.exe" /SC MINUTE /MO 5 /RU SYSTEM /RL HIGHEST >NUL 2>&1
+SCHTASKS /QUERY /TN "Empty Standby List" /XML > "%~dp0Files\Timer Resolution & Empty Standby List\EmptyStandbyList.xml"
+cd /d "%~dp0Files\Timer Resolution & Empty Standby List"
+powershell "(gc 'EmptyStandbyList.xml' -raw) -replace '<Settings>', '<Settings> <Hidden>true</Hidden>' | Set-Content 'EmptyStandbyList.xml'"
+SCHTASKS /END /TN "Empty Standby List" >NUL 2>&1
+SCHTASKS /DELETE /TN "Empty Standby List" /F >NUL 2>&1
+SCHTASKS /CREATE /XML "EmptyStandbyList.xml" /TN "Empty Standby List"
+SCHTASKS /RUN /TN "Empty Standby List"
+DEL "EmptyStandbyList.xml" /F >NUL 2>&1
+start "Start Minimal Resolution" "TimerResolution.exe"
 
 :BCDEDIT
 bcdedit /deletevalue useplatformclock

@@ -2,7 +2,7 @@
 GOTO :CHECKPERMS
 
 :CHECKPERMS
-    echo Administrative Permissions Required. Detecting Permissions...
+    echo Administrative Permissions Required. Requesting Permissions...
 
     NET SESSION >nul 2>&1
     IF %errorLevel% == 0 (
@@ -175,29 +175,6 @@ echo Disabled Windows Quality Audio Service.
 
 :TEN
 echo.
-echo Do you want to disable Windows Updates?
-echo.
-echo -----------------
-echo      [1] Yes
-echo.
-echo      [2] No
-echo -----------------
-echo.
-CHOICE /C 12 /N /M "Enter Your Choice:"
-IF ERRORLEVEL 2 GOTO :THIRTEEN
-IF ERRORLEVEL 1 GOTO :ELEVEN
-
-:ELEVEN
-echo Disabling Windows Updates...
-sc stop "wuauserv"
-sc config "wuauserv" start= disabled
-echo Disabling Update Orchestrator Service...
-sc stop "UsoSvc"
-sc config "UsoSvc" start= disabled
-echo Disabled Windows Updates.
-
-:TWELVE
-echo.
 echo Do you want to disable Windows Telemetry?
 echo.
 echo -----------------
@@ -208,7 +185,7 @@ echo -----------------
 echo.
 CHOICE /C 12 /N /M "Enter Your Choice:"
 IF ERRORLEVEL 2 GOTO :NEWSCRIPT
-IF ERRORLEVEL 1 GOTO :THIRTEEN
+IF ERRORLEVEL 1 GOTO :ELEVEN
 
 :TWELVE
 SET /P AREYOUSURE=Do you want to disable Windows Telemetry? (Y/N) 
@@ -217,7 +194,7 @@ IF /I "%AREYOUSURE%" EQU "N" GOTO :NEWSCRIPT
 IF /I "%AREYOUSURE%" NEQ "Y,N" echo Invalid input detected. Repeating prompt.
 GOTO :TWELVE
 
-:THIRTEEN
+:ELEVEN
 echo Disabling Telemetry...
 sc stop "dmwappushservice"
 sc config "dmwappushservice" start= disabled
@@ -241,10 +218,6 @@ sc stop "XboxNetApiSvc"
 sc config "XboxNetApiSvc" start= disabled
 sc stop "QWAVE"
 sc config "QWAVE" start= disabled
-sc stop "wuauserv"
-sc config "wuauserv" start= disabled
-sc stop "UsoSvc"
-sc config "UsoSvc" start= disabled
 GOTO :NEWSCRIPT
 
 :ONEENABLE
@@ -326,7 +299,7 @@ echo      [2] No
 echo -----------------
 echo.
 CHOICE /C 12 /N /M "Enter Your Choice:"
-IF ERRORLEVEL 2 GOTO :TENENABLE
+IF ERRORLEVEL 2 GOTO :NEWSCRIPT
 IF ERRORLEVEL 1 GOTO :NINEENABLE
 
 :NINEENABLE
@@ -334,30 +307,6 @@ echo Enabling Windows Quality Audio Service...
 sc config "QWAVE" start= demand
 sc start "QWAVE"
 echo Enabled Windows Quality Audio Service.
-
-:TENENABLE
-echo.
-echo Do you want to enable Windows Updates?
-echo.
-echo -----------------
-echo      [1] Yes
-echo.
-echo      [2] No
-echo -----------------
-echo.
-CHOICE /C 12 /N /M "Enter Your Choice:"
-IF ERRORLEVEL 2 GOTO :NEWSCRIPT
-IF ERRORLEVEL 1 GOTO :ELEVENENABLE
-
-:ELEVENENABLE
-echo Enabling Windows Updates...
-sc config "wuauserv" start= demand
-sc start "wuauserv"
-echo Enabling Update Orchestrator Service...
-sc config "UsoSvc" start= demand
-sc start "UsoSvc"
-echo Enabled Windows Updates.
-GOTO :NEWSCRIPT
 
 :AUTOENABLE
 echo Entered Auto Setup.
@@ -373,10 +322,6 @@ sc config "XboxNetApiSvc" start= demand
 sc start "XboxNetApiSvc"
 sc config "QWAVE" start= demand
 sc start "QWAVE"
-sc config "wuauserv" start= demand
-sc start "wuauserv"
-sc config "UsoSvc" start= demand
-sc start "UsoSvc"
 GOTO :NEWSCRIPT
 
 :NEWSCRIPT
@@ -394,7 +339,7 @@ IF ERRORLEVEL 2 GOTO :END
 IF ERRORLEVEL 1 GOTO :NEXT
 
 :NEXT
-echo Opening Next Script: Regsitry Tweaks And Bandwidth Fix...
+echo Opening Next Script: Mouse Acceleration Fix, Regsitry Tweaks And MSI Mode...
 call "%~dp0/9 Enhance Pointer Precision Off & 6-11.lnk"
 pause
 call "%~dp0/10 Registry Tweaks.reg"

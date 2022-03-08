@@ -1,4 +1,17 @@
 @ECHO off
+CLS
+GOTO :CHECKPERMS
+
+:CHECKPERMS
+    echo Administrative Permissions Required. Requesting Permissions...
+
+    NET SESSION >nul 2>&1
+    IF %errorLevel% == 0 (
+        echo Success: Administrative Permissions Confirmed. Continuing As Usual... && GOTO :CHECK
+    ) ELSE (
+        echo Current Permissions Inadequate. Requesting Elevated Rights... && (powershell start -verb runas '%0' am_admin & exit /b)
+    )
+
 :CHECK
 IF EXIST "%~dp0/files/MSI Afterburner" IF EXIST "%~dp0/files/RivaTuner Statistics Server" GOTO :SETUP (
 ) ELSE (

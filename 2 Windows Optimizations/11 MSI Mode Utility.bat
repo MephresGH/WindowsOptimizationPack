@@ -3,7 +3,7 @@ CLS
 GOTO :CHECKPERMS
 
 :CHECKPERMS
-    echo Administrative Permissions Required. Detecting Permissions...
+    echo Administrative Permissions Required. Requesting Permissions...
 
     NET SESSION >nul 2>&1
     IF %errorLevel% == 0 (
@@ -20,30 +20,22 @@ echo ===========================================================================
 echo.
 echo This script will allow you to enable MSI Mode on your graphics card and other devices.
 echo.
+echo Recommended: activate MSI Mode on graphics card(s), set mode to 'default' and exit.
+echo.
 echo The following options can be chosen:
 echo.
-echo ---------------------------------
-echo      [1] Start With Guide
+echo -------------------------
+echo      [1] Run Program
 echo.
-echo      [2] Start Without Guide
-echo.
-echo      [3] Activation Setup
-echo ---------------------------------
+echo      [2] Abort
+echo -------------------------
 echo.
 CHOICE /C 123 /N /M "Enter Your Choice:"
-IF ERRORLEVEL 3 GOTO :ABORT
-IF ERRORLEVEL 2 GOTO :NOINSTRUCTIONS
-IF ERRORLEVEL 1 GOTO :INSTRUCTIONS
+IF ERRORLEVEL 2 GOTO :ABORT
+IF ERRORLEVEL 1 GOTO :RUN
 
-:INSTRUCTIONS
-echo Opening Image Guide, Close After Inspection...
-"%~dp0/files/MSI Mode/MSI Mode Utility Guide.png"
-echo Starting MSI Mode Utility...
-"%~dp0/files/MSI Mode/Msi Mode.exe"
-GOTO :NEWSCRIPT
-
-:NOINSTRUCTIONS
-echo Starting MSI Mode Utility In No-Instructions Mode...
+:RUN
+echo Starting MSI Mode...
 "%~dp0/files/MSI Mode/Msi Mode.exe"
 GOTO :NEWSCRIPT
 

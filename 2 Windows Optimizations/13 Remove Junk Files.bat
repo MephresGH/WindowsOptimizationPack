@@ -3,7 +3,7 @@ CLS
 GOTO :CHECKPERMS
 
 :CHECKPERMS
-    echo Administrative Permissions Required. Detecting Permissions...
+    echo Administrative Permissions Required. Requesting Permissions...
 
     NET SESSION >nul 2>&1
     IF %errorLevel% == 0 (
@@ -51,7 +51,7 @@ GOTO :CLOSE
 
 :CLOSE
 echo Removing Leftover Files And Closing Programs...
-PowerShell -command "(get-process | ? { $_.mainwindowtitle -ne '' -and $_.processname -ne 'cmd' } )| stop-process"
+PowerShell "(get-process | ? { $_.mainwindowtitle -ne '' -and $_.processname -ne 'cmd' } )| stop-process"
 taskkill /f /t /fi "status eq not responding" >NUL 2>&1
 taskkill /f /t /im steam.exe >NUL 2>&1
 taskkill /f /t /im "NVDisplay.Container.exe" >NUL 2>&1
@@ -72,34 +72,6 @@ rmdir /S /Q C:\ProgramData\Malwarebytes >NUL 2>&1
 GOTO :SERVICES
 
 :SERVICES
-echo This section of the script will disable Windows Updates.
-echo.
-echo The following options can be chosen:
-echo.
-echo -------------------------------------
-echo      [1] Disable Windows Updates
-echo.
-echo      [2] Skip Script Section
-echo -------------------------------------
-echo.
-CHOICE /C 12 /N /M "Enter Your Choice:"
-IF ERRORLEVEL 2 GOTO :CLEAR
-IF ERRORLEVEL 1 GOTO :DISABLE
-
-:SERVICES
-SET /P AREYOUSURE=Do you want to disable Windows Updates? (Y/N) 
-IF /I "%AREYOUSURE%" EQU "Y" GOTO :DISABLE
-IF /I "%AREYOUSURE%" EQU "N" GOTO :CLEAR
-IF /I "%AREYOUSURE%" NEQ "Y,N" echo Invalid input detected. Repeating prompt.
-GOTO :SERVICES
-
-:DISABLE
-echo Disabling Windows Updates...
-sc stop "wuauserv"
-sc config "wuauserv" start= disabled
-echo Disabling Update Orchestrator Service...
-sc stop "UsoSvc"
-sc config "UsoSvc" start= disabled
 echo Updating Time Settings...
 sc config "W32Time" start= demand
 sc start "W32Time"
@@ -110,7 +82,7 @@ sc stop "W32Time"
 GOTO :CLEAR
 
 :CLEAR
-echo Cleaning Temporary Files And Cached Data...
+echo Cleaning Temporary Files, Cached Data And Disabling Hibernation...
 takeown /F %homepath%\AppData\Local\D3DSCache >NUL 2>&1
 icacls %homepath%\AppData\Local\D3DSCache /grant Everyone:F >NUL 2>&1
 takeown /F "C:\ProgramData\NVIDIA Corporation" >NUL 2>&1
@@ -120,62 +92,68 @@ icacls %homepath%\AppData\Local\Microsoft\Windows\Explorer /grant Everyone:F >NU
 DEL /F /S /Q /A %homepath%\AppData\Local\NVIDIA\* >NUL 2>&1
 DEL /F /S /Q /A "%homepath%\AppData\Local\NVIDIA Corporation\NV_Cache\*" >NUL 2>&1
 DEL /F /S /Q /A "C:\ProgramData\NVIDIA Corporation\NV_Cache\*" >NUL 2>&1
-DEL /F /S /Q /A %homepath%\AppData\Local\AMD\GLCache\* >NUL 2>&1
+DEL /F /S /Q /A "%homepath%\AppData\Local\AMD\GLCache\*" >NUL 2>&1
 DEL C:\bootex.txt >NUL 2>&1
 DEL C:\custom-lists.ps1 >NUL 2>&1
-NET STOP TrustedInstaller >NUL 2>&1
-DEL /F /S /Q /A C:\Windows\Temp\cab* >NUL 2>&1
-DEL /F /S /Q /A C:\Windows\Logs\CBS >NUL 2>&1
-DEL /F /S /Q /A C:\Windows\Logs\WindowsUpdate >NUL 2>&1
-NET START TrustedInstaller >NUL 2>&1
-DEL /F /S /Q /A %homepath%\AppData\Local\D3DSCache\*
-DEL /F /S /Q /A C:\Windows\SoftwareDistribution\Download\*
-DEL /F /S /Q /A C:\Windows\Temp\*
-DEL /F /S /Q /A C:\Windows\Logs\DISM\*
-DEL /F /S /Q /A %homepath%\AppData\Local\Temp\*
-GOTO :CACHE
-
-:CACHE
-echo Deleting System Cache And Disabling Hibernation...
+DEL /F /S /Q /A "C:\Windows\Temp\*" >NUL 2>&1
+DEL /F /S /Q /A "C:\Windows\Logs\CBS" >NUL 2>&1
+DEL /F /S /Q /A "C:\Windows\Logs\WindowsUpdate" >NUL 2>&1
+DEL /F /S /Q /A "%homepath%\AppData\Local\D3DSCache\*"
+DEL /F /S /Q /A "C:\Windows\SoftwareDistribution\*"
+DEL /F /S /Q /A "C:\Windows\Temp\*"
+DEL /F /S /Q /A "C:\Windows\Logs\DISM\*"
+DEL /F /S /Q /A "%homepath%\AppData\Local\Temp\*"
 cd /d %userprofile%\AppData\Local\Microsoft\Windows\Explorer
-attrib -h iconcache_*.db
-attrib -h thumbcache_*.db 
 DEL /F /S /Q /A iconcache_*.db
 DEL /F /S /Q /A thumbcache_*.db
 DEL /F /S /Q /A %LocalAppData%\Microsoft\Windows\Explorer\*
 powercfg -h off
-%windir%\System32\cmd.exe /c "echo off | clip"
-wmic service where "name like '%%cbdhsvc%%'" call stopservice
+net start | find "cbdhsvc"
+IF ERRORLEVEL == 2 (
 wmic service where "name like '%%cbdhsvc%%'" call startservice
-GOTO :GAMEBARCHECK
+) ELSE (
+echo Windows Clipboard Is Already Running. Continuing...
+)
+echo off | clip
+powershell Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.Clipboard]::Clear() >NUL 2>&1
 
 :GAMEBARCHECK
+IF NOT EXIST "C:\Windows\System32\GameBarPresenceWriter1.exe" GOTO :GAMEBAR (
+) ELSE (
 echo Deleting GameBarPresenceWriter1...
-IF NOT EXIST "C:\Windows\System32\GameBarPresenceWriter1.exe" GOTO :GAMEBAR
 takeown /F "C:\Windows\System32\GameBarPresenceWriter1.exe"
 icacls "C:\Windows\System32\GameBarPresenceWriter1.exe" /grant Everyone:F
 del "C:\Windows\System32\GameBarPresenceWriter1.exe"
+GOTO :GAMEBAR
+)
+
 :GAMEBAR
-IF NOT EXIST "C:\Windows\SysWOW64\GameBarPresenceWriter1.exe" GOTO :SKIP
+IF NOT EXIST "C:\Windows\SysWOW64\GameBarPresenceWriter1.exe" echo GameBarPresenceWriter1 Not Found. Skipping Procedure... && GOTO :SKIP (
+) ELSE (
+echo Deleting GameBarPresenceWriter1...
 takeown /F "C:\Windows\SysWOW64\GameBarPresenceWriter1.exe"
 icacls "C:\Windows\SysWOW64\GameBarPresenceWriter1.exe" /grant Everyone:F
 del "C:\Windows\SysWOW64\GameBarPresenceWriter1.exe"
 GOTO :SKIP
+)
 
 :SKIP
-echo GameBarPresenceWriter1 Not Found. Skipping Procedure...
-echo Clearing System Cache...
 ipconfig /release
 ipconfig /flushdns
 netsh int ip reset
 netsh winsock reset
 netsh branchcache flush
 ipconfig /renew
+echo.
+echo A pause has been triggered to allow an overview of what has been done so far.
+pause
 GOTO :PURGESHADOWSETUP
 
 :PURGESHADOWSETUP
 CLS
 echo This section of the script will remove all, the oldest, or no shadow backups from the current installation.
+echo.
+echo If unsure what to do, skip these options.
 echo.
 echo The following options can be chosen:
 echo.
@@ -249,7 +227,7 @@ call "%~dp0/14 Fix HPET And Memory.bat"
 
 :FINISH
 echo The script has been finished. Terminating console in 20 seconds...
-timeout /t 20
+timeout /t 3
 taskkill /f /im cmd.exe
 
 :END
