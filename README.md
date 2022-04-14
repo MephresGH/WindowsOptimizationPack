@@ -1,3 +1,5 @@
+## NOTE: This pack is no longer being actively maintained. If you have interest to keep this project up and well, please fork it or send pull requests to me for this pack.
+
 # Windows Optimization Pack
 ## A pack that sets the goal to be as transparent, automatic and stable as possible while improving fatal flaws inside Windows 7 and upwards, utilizing multiple free tools that improve, fix and stabilize the general Windows experience.
 
