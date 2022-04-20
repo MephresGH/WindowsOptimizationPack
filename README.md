@@ -90,6 +90,6 @@ Modification, Scripts and ReadMe Descriptors Created and Published by Mephres.
 ### Final Notes:
 This script is being worked upon constantly. Major changes to this script can be done at any time for safety- or performance reasons.
 For the most optimal functionality, safety and stability, you should always run this script after every major update and keep it up-to-date.
-At last: you can work on this pack for your own purposes and publish it for free under the guidelines of keeping the original README intact and updating it regularly.
+At last: you can work on this pack for your own purposes and publish it for free under the guidelines of keeping the original README intact and updating it regularly and more, as this pack is free and open source, licensed under the GPL v2.0.
 I hope this pack will help you/has helped you. Have a good day and wish you the best.
 - Mephres
