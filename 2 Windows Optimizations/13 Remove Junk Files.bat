@@ -99,7 +99,7 @@ DEL /F /S /Q /A "C:\Windows\Temp\*" >NUL 2>&1
 DEL /F /S /Q /A "C:\Windows\Logs\CBS" >NUL 2>&1
 DEL /F /S /Q /A "C:\Windows\Logs\WindowsUpdate" >NUL 2>&1
 DEL /F /S /Q /A "%homepath%\AppData\Local\D3DSCache\*"
-DEL /F /S /Q /A "C:\Windows\SoftwareDistribution\*"
+DEL /F /S /Q /A "C:\Windows\SoftwareDistribution\Download\*"
 DEL /F /S /Q /A "C:\Windows\Temp\*"
 DEL /F /S /Q /A "C:\Windows\Logs\DISM\*"
 DEL /F /S /Q /A "%homepath%\AppData\Local\Temp\*"
@@ -143,7 +143,6 @@ ipconfig /flushdns
 netsh int ip reset
 netsh winsock reset
 netsh branchcache flush
-ipconfig /renew
 echo.
 echo A pause has been triggered to allow an overview of what has been done so far.
 pause
