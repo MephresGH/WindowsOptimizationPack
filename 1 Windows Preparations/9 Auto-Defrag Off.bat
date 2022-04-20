@@ -52,7 +52,7 @@ dfrgui.exe
 GOTO :FINISH
 
 :NEXT
-echo Opening Next Script: Displaz Driver Uninstaller...
+echo Opening Next Script: Display Driver Uninstaller...
 call "%~dp0/10 Display Driver Uninstaller.bat"
 
 :FINISH

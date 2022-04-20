@@ -19,7 +19,7 @@ timeout /t 1 >NUL 2>&1
 powershell write-host -back Red ------------------------------!!!!!!!! WARNING !!!!!!!!-------------------------------
 echo.
 timeout /t 1 >NUL 2>&1
-powershell -command write-host -fore Red The computer is currently not booted into Safe Mode. It is highly advised to boot into Safe Mode to continue.
+powershell write-host -fore Red The computer is currently not booted into Safe Mode. It is highly advised to boot into Safe Mode to continue.
 timeout /t 1 >NUL 2>&1
 echo.
 echo The following options can be chosen:

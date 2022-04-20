@@ -60,15 +60,10 @@ sfc /scannow
 timeout /t 3 /nobreak
 chkdsk /r
 shutdown /r /t 5
-GOTO :FINISH
-
-:SETUPRUN
-CLS
-echo Entering Second Option...
-echo.
 GOTO :NEXT
 
 :NEXT
+CLS
 echo Opening Next Script: C++ Installer...
 call "%~dp0/4 C++ Installer.bat"
 

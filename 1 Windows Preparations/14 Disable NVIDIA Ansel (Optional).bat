@@ -55,7 +55,8 @@ IF ERRORLEVEL 2 GOTO :ABORT
 IF ERRORLEVEL 1 GOTO :NEXT
 
 :NEXT
-echo Opening Next Script: System Service Manager...call "%~dp0/../2 Windows Optimizations/1 Turn Gamebar Off & Game Mode On.url"
+echo Opening Next Scripts...
+call "%~dp0/../2 Windows Optimizations/1 Turn Gamebar Off & Game Mode On.url"
 pause
 call "%~dp0/../2 Windows Optimizations/2 Disable Backgrounds Apps & Fix Privacy.url"
 pause

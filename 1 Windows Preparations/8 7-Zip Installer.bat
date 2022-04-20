@@ -30,7 +30,7 @@ timeout /t 3 /nobreak
 DEL /F /S /Q /A "C:\Program Files\7-Zip\*"
 rmdir /S /Q "C:\Program Files\7-Zip"
 explorer
-call "%~dp0/7 7-Zip Installer.bat"
+call "%~dp0/8 7-Zip Installer.bat"
 
 :86UNINSTALL
 echo 7-Zip 32-Bit Found. Uninstalling...
@@ -42,7 +42,7 @@ timeout /t 3 /nobreak
 DEL /F /S /Q /A "C:\Program Files\7-Zip\*"
 rmdir /S /Q "C:\Program Files\7-Zip"
 explorer
-call "%~dp0/7 7-Zip Installer.bat"
+call "%~dp0/8 7-Zip Installer.bat"
 
 :INSTALLER
 echo ===========================================================================
@@ -98,7 +98,7 @@ GOTO :NEXT
 GOTO :NEXT
 
 :NEXT
-echo Opening Next Script: C++ Installer...
+echo Opening Next Script: Auto-Defrag Fix...
 call "%~dp0/9 Auto-Defrag Off.bat"
 
 :FINISH

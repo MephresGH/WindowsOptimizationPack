@@ -13,7 +13,7 @@ timeout /t 1 >NUL 2>&1
 echo To install the newest C++ Runtimes, you have to be connected to the internet.
 echo.
 timeout /t 1 >NUL 2>&1
-powershell -command write-host -fore Red Note: You should ONLY uninstall Runtimes if you know what you are doing.
+powershell write-host -fore Red Note: You should ONLY uninstall Runtimes if you know what you are doing.
 timeout /t 1 >NUL 2>&1
 echo.
 echo The following options can be chosen:
