@@ -65,7 +65,7 @@ NVCleanstall Created and Published by TechPowerUp.
 Power Settings Explorer Created And Published by mbk1969 on Guru3D Forums.
 - https://forums.guru3d.com/threads/windows-power-plan-settings-explorer-utility.416058
 
-RivaTuner Statistics Server Created and Published by Alexey Nicolaychuk.
+~~RivaTuner Statistics Server Created and Published by Alexey Nicolaychuk.~~ **NO LONGER BEING USED IN CURRENT BUILD**
 - https://www.guru3d.com/files/index.html
 - https://www.guru3d.com/files-details/rtss-rivatuner-statistics-server-download.html
 
